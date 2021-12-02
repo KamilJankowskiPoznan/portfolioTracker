@@ -57,7 +57,7 @@ export const Home = ({ portfolioCompanies, setPortfolioCompanies }: Props) => {
         if (companyName) {
             console.log(companyName)
 
-            const url = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${companyName}&apikey=7827ROG6VN3VFT4V`
+            const url = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${companyName}&apikey=${process.env.REACT_APP_STOCK_KEY}`
 
             request.get({
                 url: url,

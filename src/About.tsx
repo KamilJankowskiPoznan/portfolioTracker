@@ -16,7 +16,7 @@ export const About = () => {
     } | undefined>(undefined);
     const { company } = useParams();
     useEffect(() => {
-        const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${company}&apikey=7827ROG6VN3VFT4V`
+        const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${company}&apikey=${process.env.REACT_APP_STOCK_KEY}`
         request.get({
             url: url,
             json: true,
