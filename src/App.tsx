@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
+import { About } from './About';
+import { Home, SearchedCompany } from './Home';
+
+const App = () => {
+  const [portfolioCompanies, setPortfolioCompanies] = useState<SearchedCompany[]>([])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home portfolioCompanies={portfolioCompanies} setPortfolioCompanies={setPortfolioCompanies} />} />
+        <Route path="/about:company" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  )
+};
 
 export default App;
