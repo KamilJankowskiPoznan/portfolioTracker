@@ -7,6 +7,14 @@ import {
 } from "react-router-dom";
 import request from 'request';
 
+import styled from 'styled-components';
+
+import { convertLongNumberToString } from './utils'
+
+const SectionContainer = styled.div`
+margin:30px;
+`;
+
 export const About = () => {
     const [companyInfo, setCompanyInfo] = useState<{
         Name: string;
@@ -31,18 +39,18 @@ export const About = () => {
             }
         });
     },
-    [company]);
+        [company]);
     return (
         <div>
             <Button variant="outlined"><Link to="/">Back</Link></Button>
-            <br style={{lineHeight:"20px"}}/>
-            Name: {companyInfo?.Name}
             <br />
-            Address: {companyInfo?.Address}
+            <SectionContainer> Name: {companyInfo?.Name}</SectionContainer>
             <br />
-            MarketCapitalization: {companyInfo?.MarketCapitalization}
+            <SectionContainer> Address: {companyInfo?.Address}</SectionContainer>
             <br />
-            {companyInfo?.Description}
+            <SectionContainer>  MarketCapitalization: {companyInfo?.MarketCapitalization ? convertLongNumberToString(parseInt(companyInfo.MarketCapitalization)) : ""}</SectionContainer>
+            <br />
+            <SectionContainer>  {companyInfo?.Description}</SectionContainer>
         </div>
     );
 }

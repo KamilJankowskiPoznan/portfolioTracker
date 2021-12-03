@@ -52,11 +52,8 @@ type Props = {
 export const Home = ({ portfolioCompanies, setPortfolioCompanies }: Props) => {
     const [companyName, setCompanyName] = useState("");
     const [searchedCompanies, setSearchedCompanies] = useState<SearchedCompany[]>([])
-    //const [portfolioCompanies, setPortfolioCompanies] = useState<SearchedCompany[]>([])
     useEffect(() => {
         if (companyName) {
-            console.log(companyName)
-
             const url = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${companyName}&apikey=${process.env.REACT_APP_STOCK_KEY}`
 
             request.get({
@@ -81,7 +78,7 @@ export const Home = ({ portfolioCompanies, setPortfolioCompanies }: Props) => {
             setPortfolioCompanies([...portfolioCompanies, company])
         }
     }
-    const removeCompanyToPortfolio = (company: SearchedCompany) => {
+    const removeCompanyFromPortfolio = (company: SearchedCompany) => {
         setPortfolioCompanies(portfolioCompanies.filter(current => current.symbol !== company.symbol))
     }
     return (
@@ -92,18 +89,23 @@ export const Home = ({ portfolioCompanies, setPortfolioCompanies }: Props) => {
                         width: "40%"
                     }}>
                         <TextField id="standard-basic" label="Company name" variant="standard" onChange={e => inputHandler(e.target.value)} />
-                        {searchedCompanies.map((company: SearchedCompany) => {
-                            console.log(company)
-                            return (
-                                <Grid item key={company.symbol}>
-                                    <Paper className={classes.paper}>
-                                        <div>{company.symbol}</div>
-                                        <div>{company.name}</div>
-                                        <Button variant="outlined" onClick={() => addCompanyToPortfolio(company)}>+</Button>
-                                    </Paper>
-                                </Grid>
-                            )
-                        })}
+                        <Box sx={{
+                            width: "70%",
+                            border: "1px solid black",
+                            margin: "auto"
+                        }}>
+                            {searchedCompanies.map((company: SearchedCompany) => {
+                                return (
+                                    <Grid item key={company.symbol}>
+                                        <Paper className={classes.paper}>
+                                            <div>{company.symbol}</div>
+                                            <div>{company.name}</div>
+                                            <Button variant="outlined" onClick={() => addCompanyToPortfolio(company)}>+</Button>
+                                        </Paper>
+                                    </Grid>
+                                )
+                            })}
+                        </Box>
                     </Box>
                     <Box sx={{
                         width: "40%"
@@ -117,7 +119,7 @@ export const Home = ({ portfolioCompanies, setPortfolioCompanies }: Props) => {
                                             <div>{company.symbol}</div>
                                             <div>{company.name}</div>
                                         </Link>
-                                        <Button variant="outlined" onClick={() => removeCompanyToPortfolio(company)}>Remove</Button>
+                                        <Button variant="outlined" onClick={() => removeCompanyFromPortfolio(company)}>Remove</Button>
                                     </Paper>
                                 </Grid>
                             )
